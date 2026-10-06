@@ -2,7 +2,7 @@
 
 # function to display help
 show_help() {
-    echo "Usage: $(basename "$0") [options]
+    echo "Usage: $(basename "$0") [options]"
     echo ""
     echo "Options:"
     echo "  -h  Show this help message and exit."
