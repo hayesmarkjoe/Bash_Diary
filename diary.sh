@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-# function to display help
+# Check if Directory Documents/Diary exits, if not create it
+[[ ! -d $HOME/Documents/Diary ]] && mkdir $HOME/Documents/Diary/
+
 show_help() {
     echo "Usage: $(basename "$0") [options]"
     echo ""
     echo "Options:"
     echo "  -h  Show this help message and exit."
-    echo "   -e [date] Edit an entry Defaults to today\'s date"
+    echo "   -e [date] Edit an entry Defaults to today's date"
     echo "              Format: YYYY-MM-DD"
 }
 
@@ -23,7 +25,7 @@ while getopts ":he:" opt; do
             exit 0
             ;;
         e)
-           edit_mode=true
+            edit_mode=true
             target_date="$OPTARG"
            ;;
         \?)
@@ -32,23 +34,23 @@ while getopts ":he:" opt; do
             exit 1
             ;;
         :)
-            # if -w wth no date, getopts triggers this
+            # if -e wth no date, getopts triggers this
             # defdaults to editing today's post
             edit_mode=true
             target_date="$tdate"
             ;;
-   esac
+    esac
 done
 
-shift $((OPTIND -1))
+shift $((OPTIND - 1))
 # clean up extensions if typed YYYY-DD-MM.md -> YYYY-DD-MM
-if [[ $"target_date" = "today" ]]; then
+if [[ "$target_date" = "today" ]]; then
     target_date="$tdate"
 fi
 
 # define the file based on target date
 clean_date="${target_date%.md}"
-file="${clean_date}.md"
+file="$HOME/Documents/Diary/${clean_date}.md"
 
 # Core logic 
 if [[ "$edit_mode" == true ]]; then
